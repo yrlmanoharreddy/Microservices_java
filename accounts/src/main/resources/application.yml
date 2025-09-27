@@ -8,8 +8,8 @@ spring:
   datasource:
     url: 'jdbc:postgresql://localhost:5432/intdb'
     driverClassName: org.postgresql.Driver
-    username: root
-    password: 'password'
+    username: postgres
+    password: 'Manohar123%'
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -1,18 +1,20 @@
 package com.manuBank.accounts.dto;
 
+import org.springframework.http.HttpStatus;
+
 import java.time.LocalDateTime;
 
 public class ErrorResponseDto {
 
     private String apiPath;
-    private String errorCode;
+    private HttpStatus errorCode;
     private String errorMessage;
     private LocalDateTime errorTime;
 
     public ErrorResponseDto() {
     }
 
-    public ErrorResponseDto(String apiPath, String errorCode, String errorMessage, LocalDateTime errorTime) {
+    public ErrorResponseDto(String apiPath, HttpStatus errorCode, String errorMessage, LocalDateTime errorTime) {
         this.apiPath = apiPath;
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
@@ -27,11 +29,11 @@ public class ErrorResponseDto {
         this.apiPath = apiPath;
     }
 
-    public String getErrorCode() {
+    public HttpStatus getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(String errorCode) {
+    public void setErrorCode(HttpStatus errorCode) {
         this.errorCode = errorCode;
     }
 
