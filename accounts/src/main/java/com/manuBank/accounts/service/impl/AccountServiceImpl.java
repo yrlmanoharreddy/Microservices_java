@@ -11,6 +11,8 @@ import com.manuBank.accounts.repository.CustomerRepository;
 import com.manuBank.accounts.service.IAccountService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -33,11 +35,14 @@ public class AccountServiceImpl implements IAccountService {
 
         if(optionalCustomer.isPresent())
         {
-            throw new CustomerAlreadyExistsException("Customer Alreay Exists with the given mobile Number " +
+            throw new CustomerAlreadyExistsException("Customer Already Exists with the given mobile Number " +
                     customerDto.getMobileNumber());
         }
+        customer.setCreatedAt(new Date());
+        customer.setCreatedBy("YRLManohar");
         Customer savedCus = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(savedCus));
+
     }
 
     private Accounts createNewAccount(Customer customer) {
@@ -47,6 +52,8 @@ public class AccountServiceImpl implements IAccountService {
         newAccount.setAccountNumber(accNo);
         newAccount.setBranchAddress(AccountConstants.ADDRESS);
         newAccount.setAccountType(AccountConstants.SAVINGS);
+        newAccount.setCreatedAt(new Date());
+        newAccount.setCreatedBy("YrlToo");
         return newAccount;
     }
 }

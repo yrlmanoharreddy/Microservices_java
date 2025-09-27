@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Accounts {
+public class Accounts extends BaseEntity{
 
     @Column(name="customer_Id")
     private Integer customerId;
