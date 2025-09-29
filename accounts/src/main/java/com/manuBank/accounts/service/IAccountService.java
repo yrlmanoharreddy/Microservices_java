@@ -4,5 +4,7 @@ import com.manuBank.accounts.dto.CustomerDto;
 
 public interface IAccountService {
 
-    void createAccount(CustomerDto customerDto);
+    public void createAccount(CustomerDto customerDto);
+
+    public CustomerDto fetchAccount(String mobileNumber);
 }

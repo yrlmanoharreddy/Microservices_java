@@ -5,16 +5,26 @@ public class AccountsDto {
     private Long AccountNumber;
     private String AccountType;
     private String branchAddress;
+    private CustomerDto customerDto;
 
     public AccountsDto()
     {
 
     }
 
-    public AccountsDto(String branchAddress, String accountType, Long accountNumber) {
-        this.branchAddress = branchAddress;
-        AccountType = accountType;
+    public AccountsDto(Long accountNumber, String accountType, String branchAddress, CustomerDto customerDto) {
         AccountNumber = accountNumber;
+        AccountType = accountType;
+        this.branchAddress = branchAddress;
+        this.customerDto = customerDto;
+    }
+
+    public CustomerDto getCustomerDto() {
+        return customerDto;
+    }
+
+    public void setCustomerDto(CustomerDto customerDto) {
+        this.customerDto = customerDto;
     }
 
     public String getAccountType() {

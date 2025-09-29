@@ -1,10 +1,13 @@
 package com.manuBank.accounts.service.impl;
 
 import com.manuBank.accounts.constants.AccountConstants;
+import com.manuBank.accounts.dto.AccountsDto;
 import com.manuBank.accounts.dto.CustomerDto;
 import com.manuBank.accounts.entity.Accounts;
 import com.manuBank.accounts.entity.Customer;
 import com.manuBank.accounts.exception.CustomerAlreadyExistsException;
+import com.manuBank.accounts.exception.ResourceNotFoundException;
+import com.manuBank.accounts.mapper.AccountsMapper;
 import com.manuBank.accounts.mapper.CustomerMapper;
 import com.manuBank.accounts.repository.AccountsRepository;
 import com.manuBank.accounts.repository.CustomerRepository;
@@ -56,4 +59,21 @@ public class AccountServiceImpl implements IAccountService {
         newAccount.setCreatedBy("YrlToo");
         return newAccount;
     }
+
+    @Override
+    public CustomerDto fetchAccount(String mobileNumber)
+    {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("customer", "mobilenumber", mobileNumber)
+        );
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+
+        Accounts account = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
+                ()-> new ResourceNotFoundException("account", "customerId", customer.getCustomerId().toString())
+        );
+        customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(account, new AccountsDto()));
+        return customerDto;
+    }
+
+
 }

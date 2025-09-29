@@ -5,16 +5,26 @@ public class CustomerDto {
     private String name;
     private String email;
     private String mobileNumber;
+    private AccountsDto accountsDto;
 
     public CustomerDto()
     {
 
     }
 
-    public CustomerDto(String name, String email, String mobileNumber) {
+    public CustomerDto(String name, String email, String mobileNumber, AccountsDto accountsDto) {
         this.name = name;
         this.email = email;
         this.mobileNumber = mobileNumber;
+        this.accountsDto = accountsDto;
+    }
+
+    public AccountsDto getAccountsDto() {
+        return accountsDto;
+    }
+
+    public void setAccountsDto(AccountsDto accountsDto) {
+        this.accountsDto = accountsDto;
     }
 
     public String getName() {
