@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
+import static com.manuBank.accounts.mapper.CustomerMapper.mapToCustomer;
+
 @Service
 public class AccountServiceImpl implements IAccountService {
 
@@ -33,7 +35,7 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public void createAccount(CustomerDto customerDto)
     {
-        Customer customer = CustomerMapper.mapToCustomer(new Customer(), customerDto);
+        Customer customer = mapToCustomer(new Customer(), customerDto);
         Optional<Customer> optionalCustomer = customerRepository.findByMobileNumber(customer.getMobileNumber());
 
         if(optionalCustomer.isPresent())
@@ -73,6 +75,34 @@ public class AccountServiceImpl implements IAccountService {
         );
         customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(account, new AccountsDto()));
         return customerDto;
+    }
+
+
+    @Override
+    public boolean updateAccount(CustomerDto customerDto)
+    {
+        boolean isUpdated = false;
+        AccountsDto accountsDto = customerDto.getAccountsDto();
+        if(accountsDto!=null)
+        {
+            Accounts account = accountsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(
+                    ()-> new ResourceNotFoundException("account", "accountNumber", accountsDto.getAccountNumber().toString())
+            );
+
+            account = AccountsMapper.mapToAccounts(account, accountsDto);
+            accountsRepository.save(account);
+
+            Integer customerId = account.getCustomerId();
+            Customer customer = customerRepository.findById(customerId).orElseThrow(
+                    ()-> new ResourceNotFoundException("customer", "customerId", customerId.toString())
+            );
+
+            customer = CustomerMapper.mapToCustomer(customer, customerDto);
+            customerRepository.save(customer);
+
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 
 
