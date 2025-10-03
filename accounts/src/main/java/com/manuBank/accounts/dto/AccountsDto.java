@@ -1,8 +1,15 @@
 package com.manuBank.accounts.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+
 public class AccountsDto {
 
+    @NotEmpty(message="Account number cannot be null or empty")
+    @Pattern(regexp = "^[0-9]{10}$", message="The account must contain 10 digits ")
     private Long AccountNumber;
+
+    @NotEmpty
     private String AccountType;
     private String branchAddress;
     private CustomerDto customerDto;

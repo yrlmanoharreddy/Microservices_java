@@ -5,13 +5,16 @@ import com.manuBank.accounts.dto.AccountsDto;
 import com.manuBank.accounts.dto.CustomerDto;
 import com.manuBank.accounts.dto.ResponseDto;
 import com.manuBank.accounts.service.impl.AccountServiceImpl;
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api")
+@Validated
 public class AccountsController {
 
     private AccountServiceImpl accountserviceImp;
@@ -21,7 +24,7 @@ public class AccountsController {
     }
 
     @PostMapping(value = "/create", consumes="application/json")
-    public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
 
         accountserviceImp.createAccount(customerDto);
         return ResponseEntity
