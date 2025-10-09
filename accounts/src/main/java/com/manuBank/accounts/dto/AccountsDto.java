@@ -1,8 +1,14 @@
 package com.manuBank.accounts.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
+
+@Schema(
+        name = "Account class",
+        description = "Schema to hold the Account details"
+)
 public class AccountsDto {
 
     @NotEmpty(message="Account number cannot be null or empty")
@@ -10,6 +16,9 @@ public class AccountsDto {
     private Long AccountNumber;
 
     @NotEmpty
+    @Schema(
+            description = "Type of account whether it is SAVINGS/CHECKING"
+    )
     private String AccountType;
     private String branchAddress;
     private CustomerDto customerDto;

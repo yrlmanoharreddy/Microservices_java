@@ -3,8 +3,15 @@ package com.manuBank.accounts.controller;
 import com.manuBank.accounts.constants.AccountConstants;
 import com.manuBank.accounts.dto.AccountsDto;
 import com.manuBank.accounts.dto.CustomerDto;
+import com.manuBank.accounts.dto.ErrorResponseDto;
 import com.manuBank.accounts.dto.ResponseDto;
 import com.manuBank.accounts.service.impl.AccountServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
@@ -15,6 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "api")
 @Validated
+@Tag(
+        name = "This controllers is used to create the bank accounts for the customer",
+        description = "This controller is focusing on some main operations related to customer like " +
+                "CRUD operation related to account to create the account, fetch the account details, updating the account details " +
+                " and deleting the account details"
+)
 public class AccountsController {
 
     private AccountServiceImpl accountserviceImp;
@@ -24,6 +37,24 @@ public class AccountsController {
     }
 
     @PostMapping(value = "/create", consumes="application/json")
+    @Operation(
+            summary = "Creating the account for the customer",
+            description = "It is the api endpoint for creating the account for the customer like C in CRUD"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description =" Http Status code for creating the account is 201"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http Status code incase of any exception",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
 
         accountserviceImp.createAccount(customerDto);
