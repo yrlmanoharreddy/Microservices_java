@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CardsServiceImp implements CardsService {
 
-    public void createCard()
+    public void createCard(String mobileNumber)
     {
 
     }
